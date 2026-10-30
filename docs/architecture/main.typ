@@ -17,7 +17,6 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 #set page(
     paper: "a4",
     margin: (top: 2.5cm, bottom: 2.5cm, left: 3cm, right: 3cm),
-    numbering: "1",
 )
 #set text(size: 12pt, lang: "fr")
 #set par(justify: true)
@@ -78,8 +77,10 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 
 
 #set page(
-    header: [#align(center)[_Architecture - Sleeping Beauty_]]
+    header: [#align(center)[_Architecture - Sleeping Beauty_]],
+    numbering: "1",
 )
+#counter(page).update(1)
 
 
 ////////////////////////////////////////////////////////////////////////////////
