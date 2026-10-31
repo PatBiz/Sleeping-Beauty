@@ -127,40 +127,14 @@ Elle propose *un suivi* et des *solutions personnalisés*, basées sur le compor
 
 == 1.1 Contexte d'utilisation
 
-// TODO: Améliorer la formulation (avec l'IA)
+Notre solution s'adresse à un public relativement large. Toutefois, afin d'en garantir l'efficacité optimale, nous considérons que l'utilisateur est un adulte ne présentant pas de troubles particuliers du sommeil, et disposant d'un rythme circadien classique, c'est-à-dire une personne qui dort la nuit et travaille le jour.
 
-Notre solution s'adresse à un public assez large.
+En revanche, Sleeping Beauty n'est pas destinée aux personnes présentant un handicap moteur ou un manque d'autonomie, comme les nourrissons ou les personnes en situation de handicap mental.
 
-Toutefois, pour garantir une efficacité maximale de notre solution, nous considérons que l'utilisateur est un adulte sans problème de sommeil ni psychologique particulier et a un cycle cyrcadien classique (ex: ne dort pas le jour et travaille la nuit).
-Par contre notre solution n'est pas destiné à des personnes avec un handicap moteur ou avec un manque d'autonomie (ex: nourrisson, handicapé mental, etc.).
-
-Sleeping Beauty impose que la chambre de l'utilisateur soit au minimun domotisé (chauffage, climatisation, volets, lumières, etc.) avec des équipements supportés.
-C'est pourquoi, lors de l'installation, les équipements non-supportés sont remplacés et les équipements manquants sont intallés.
+Le fonctionnement de Sleeping Beauty nécessite également une chambre équipée d'un système domotique comprenant au minimum les équipements compatibles nécessaires (chauffage, climatisation, volets, éclairage, etc.). Lors de l'installation, les équipements non compatibles sont remplacés et les équipements manquants sont ajoutés afin de garantir le bon fonctionnement de la solution.
 
 
-== 1.2 Exigences
-
-// TODO: Relire (est-ce vraiment pertinent sachant qu'on parle plus loin des contraintes opérationnelles ?) & reformuler avec des phrases (si c'est pertinent)
-
-=== 1.2.1 Exigences fonctionnelles
-
-- Mesurer l'efficacité du sommeil à partir de la durée du sommeil et de la durée dans le lit.
-- Générer l'hypnogramme de l'utilisateur et le comparer à un hypnogramme idéal afin de maximiser la qualité du sommeil.
-- Collecter les données de température et d'humidité du lit et de la chambre ainsi que les mouvements et la position de l'utilisateur en temps réel.
-- Mesurer les cycles de sommeil, les battements de cœur et l'oxygénation.
-- Collecter les données environnementales de la pièce (luminosité via une lampe connectée, son, température, humidité et optionnellement la qualité de l'air).
-- Agir sur la température de la chambre et du lit pour préparer en prévision de la phase de sommeil de l'utilisateur.
-- Signaler à l'utilisateur les problèmes de sommeil perçus.
-- Le système doit déclencher le réveil de l'utilisateur en priorité lors d'une phase de sommeil léger identifiée.
-- En cas d'échec du réveil progressif lumineux/sonore dans un délai de $n$ minutes, le système doit basculer sur une alerte sonore puissante.
-
-=== 1.2.2 Exigences non fonctionnelles
-
-- Un gérant non-expert d'un ou plusieurs complexe immobilier (immeuble, maison, hôtel...) doit pouvoir configurer, et paramétrer facilement son parc de chambre.
-- Garantir la continuité du fonctionnement de la régulation de la température en cas de panne système.
-
-
-== 1.3 Nos KPIs
+== 1.2 Nos KPIs
 
 #include "res/kpis.typ"
 
@@ -179,7 +153,7 @@ C'est pourquoi, lors de l'installation, les équipements non-supportés sont rem
 ==== Préparation de l'environnement avant le sommeil
 
 Ce domaine définit les stratégies permettant de préparer l'environnement de sommeil afin de favoriser l'endormissement de l'utilisateur.
-Il détermine les conditions environnementales à atteindre avant le début de la phase de sommeil, notamment en matière de température, de luminosité et de qualité de l'air.
+Il détermine les conditions environnementales à atteindre avant le début de la phase de sommeil, notamment en matière de température et de luminosité.
 L'objectif est de rendre l'environnement favorable à l'endormissement au moment où l'utilisateur souhaite se coucher.
 
 ==== Régulation de l'environnement pendant le sommeil
@@ -226,6 +200,7 @@ Il exploite également le jumeau numérique pour simuler les conséquences possi
 Ce domaine vise à améliorer progressivement les stratégies de contrôle en adaptant les paramètres utilisés par le système de décision. Il exploite les résultats des nuits précédentes, notamment les scores de qualité du sommeil, afin d'identifier les ajustements susceptibles d'améliorer les performances du système. Dans le cadre du POC, l'apprentissage par renforcement est réalisé entre les nuits, les règles de décision restant fixes.
 
 #blockquote()[
+    *Note :*
     Une adaptation continue pendant la nuit pourrait être envisagée ultérieurement.
     Toutefois, l'apprentissage est actuellement prévu pour s'effectuer entre les nuits.
 ]
@@ -237,6 +212,7 @@ Il calcule un score permettant de caractériser la qualité d'une nuit et de com
 Les résultats de cette évaluation sont également exploités par le système d'apprentissage afin d'adapter progressivement les paramètres de contrôle.
 
 #blockquote()[
+    *Note :*
     Ce domaine pourrait également être classé comme Core si la qualité de l'évaluation et son utilisation dans la boucle d'adaptation constituent des éléments essentiels à la différenciation de la solution.
     À l'inverse, il peut être considéré comme Supporting si son fonctionnement repose principalement sur des méthodes standardisées.
 ]
@@ -247,6 +223,13 @@ Ce domaine assure l'acquisition des mesures de l'environnement physique de la ch
 Il synchronise ces mesures avec le jumeau numérique afin que celui-ci représente au mieux l'état courant de l'environnement physique.
 Les informations ainsi collectées sont exploitées par le système de décision pour adapter le pilotage de l'environnement.
 
+#blockquote()[
+    *Note :*
+    La mesure du CO2 et de l'humidité n'alimente que la génération d'alertes.
+    Un système d'aération, ou une ouverture des fenêtre automatique est nécessaire pour pouvoir les réguler.
+    Cependant, nous ne fournissons pas de telles fonctionnalités.
+]
+
 ==== Mesure des phases de sommeil
 
 Ce domaine assure la récupération et l'exploitation des données relatives aux phases de sommeil de l'utilisateur, fournies par sa montre connectée.
@@ -254,6 +237,7 @@ Il permet d'estimer l'état de sommeil de l'utilisateur au cours de la nuit et f
 Ces données constituent également une entrée essentielle pour l'évaluation de la qualité du sommeil.
 
 #blockquote()[
+    *Note :*
     La diversité des modèles de montres connectées et de leurs interfaces nécessite de développer des mécanismes d'intégration adaptés à chaque modèle supporté.
     Dans le cadre du POC, un seul modèle de montre sera pris en charge afin de limiter la complexité de cette intégration.
 ]
@@ -353,34 +337,25 @@ En cas de situation critique, il peut empêcher certaines actions, déclencher u
 
 == 3.1 Matrice des risques (non-exhaustive)
 
-La matrice hiérarchise les risques selon leur probabilité (de rare à presque certain) et leur impact (d'insignifiant à catastrophique). Elle identifie ceux qui demandent une attention particulière lors de la conception :
-
-- *Réveil :*
-  un réveil en plein sommeil profond, tardif ou absent perturbe le sommeil ou compromet l'heure de réveil souhaitée.
-- *Régulation thermique :*
-  une défaillance du système chauffant perturbe le sommeil ; une surchauffe du sur-matelas peut provoquer des brûlures.
-- *Qualité de l'environnement :*
-  une mauvaise qualité de l'air peut provoquer des céphalées, et l'humidité peut s'accumuler.
-- *Évaluation et apprentissage :*
-  une évaluation inadaptée du sommeil conduit à un apprentissage incorrect et dégrade les décisions du système.
-- *Confiance de l'utilisateur :*
-  une dégradation persistante du sommeil ou des dysfonctionnements répétés entraînent l'abandon de la solution.
-
-Les brûlures pendant le sommeil et la perte de confiance sont les risques les plus critiques, avec des conséquences jugées catastrophiques.
-
 #figure(
     image("./res/risk-matrix.png", width: 125%),
     caption: "Matrice des risques",
 )
 
+- *Réveil :* un réveil en plein sommeil profond, tardif ou absent perturbe le sommeil ou compromet l'heure de réveil souhaitée.
+- *Régulation thermique :* une défaillance du système chauffant perturbe le sommeil ; une surchauffe du sur-matelas peut même provoquer des brûlures.
+- *Qualité de l'environnement :* une mauvaise qualité de l'air peut provoquer des céphalées, et l'humidité peut s'accumuler.
+- *Évaluation et apprentissage :* une évaluation inadaptée du sommeil conduit à un apprentissage incorrect et dégrade les décisions du système.
+- *Confiance de l'utilisateur :* une dégradation persistante du sommeil ou des dysfonctionnements répétés entraînent l'abandon de la solution.
+
 
 == 3.2 Bowties
 
-Les diagrammes Bowtie relient les menaces à un événement redouté, puis à ses conséquences. Les barrières préventives, en amont, empêchent les menaces de provoquer l'événement. Les barrières mitigatives, en aval, en limitent les conséquences s'il survient malgré tout. Une barrière peut comporter plusieurs mécanismes successifs, dont chacun conditionne le fonctionnement de la chaîne.
-
 === 3.2.1 Perte de contrôle du système chauffant
 
-L'événement redouté est la perte de contrôle de la régulation thermique du sur-matelas pendant que l'utilisateur dort. Il peut résulter d'une perte de communication, de mesures de température incorrectes ou d'une panne matérielle. Il peut provoquer des brûlures, perturber le sommeil ou faire perdre la confiance de l'utilisateur.
+L'événement redouté est la perte de contrôle de la régulation thermique du sur-matelas pendant que l'utilisateur dort.
+Il peut résulter d'une perte de communication, de mesures de température incorrectes ou d'une panne matérielle.
+Il peut provoquer des brûlures, perturber le sommeil ou faire perdre la confiance de l'utilisateur.
 
 #figure(
     image("./res/risk-bowties/bowtie-1.png", width: 125%),
@@ -389,32 +364,37 @@ L'événement redouté est la perte de contrôle de la régulation thermique du 
 
 ==== Barrières préventives
 
-Trois menaces sont identifiées :
+Trois menaces ont été identifiées :
 
-- *Perte de signal :*
-  les commandes de régulation ne parviennent plus au sur-matelas.
-- *Capteurs de température erronés :*
-  des mesures sous-évaluées ou sur-évaluées entraînent des décisions inadaptées.
-- *Dysfonctionnement du sur-matelas :*
-  une défaillance matérielle empêche la régulation.
-
-Contre la perte de signal, le monitoring du réseau détecte les anomalies et permet d'adapter les commandes (vitesse de chauffe, fréquence d'envoi). Un protocole réseau robuste et un *keep-alive* régulier complètent cette chaîne.
-Contre les mesures erronées, plusieurs capteurs permettent de croiser les données, et le système compense ou ignore un capteur défaillant.
-Contre les pannes matérielles, un monitoring détecte les dysfonctionnements et une maintenance régulière est prévue.
+- *Perte de signal :* les commandes de régulation ne parviennent plus au sur-matelas.
+    Pour y palier, le monitoring du réseau détecte les anomalies et permet d'adapter les commandes (vitesse de chauffe, fréquence d'envoi).
+    Aussi, un protocole réseau robuste et un *keep-alive* régulier complètent cette chaîne.
+- *Capteurs de température erronés :* des mesures sous-évaluées ou sur-évaluées entraînent des décisions inadaptées.
+    Ainsi plusieurs capteurs permettent de croiser les données.
+    Et attribuer un score de fiabilité permet au système de compenser ou ignorer les capteurs défaillants.
+- *Dysfonctionnement du sur-matelas :* une défaillance matérielle empêche la régulation.
+    Contre les pannes matérielles, un monitoring détecte les dysfonctionnements et une maintenance régulière est prévue.
 
 ==== Barrières mitigatives
 
-Si la perte de contrôle survient, une coupure d'urgence du sur-matelas est prévue. Elle s'accompagne d'un réveil de l'utilisateur au-delà de 39 °C et d'un *kill switch* volontaire, pour limiter le risque de brûlure. Une explication transparente de l'anomalie sur le portail limite la perte de confiance.
-La température de la pièce peut aussi être augmentée ou diminuée pour compenser, dans une plage de 16 °C à 24 °C afin de préserver le sommeil.
+Si la perte de contrôle survient, une coupure d'urgence du sur-matelas est prévue.
+Elle s'accompagne d'un réveil de l'utilisateur à partir de 40 °C et d'un *kill switch* volontaire du sur-matelas, pour limiter le risque de brûlure.
+Une explication transparente de l'anomalie sur le portail limite la perte de confiance.
+La température de la pièce peut aussi être augmentée ou diminuée pour compenser, dans une plage de 16 °C à 24 °C afin de préserver le sommeil lorsque la défaillance est minime.
 
 ==== Impact sur l'architecture
 
-La régulation thermique est une fonction normale de la solution : elle adapte les commandes selon les températures mesurées. La sûreté doit en être indépendante, afin de détecter une situation dangereuse et couper le chauffage même si la régulation est défaillante.
-L'architecture doit aussi intégrer la détection des anomalies de communication et la surveillance des capteurs. Enfin, la compensation par la température de la pièce exige une coordination entre le contrôle du sur-matelas et la régulation thermique de la chambre.
+La régulation thermique est une fonction normale de la solution : elle adapte les commandes selon les températures mesurées.
+La sûreté doit en être indépendante, afin de détecter une situation dangereuse et couper le chauffage même si la régulation est défaillante.
+
+L'architecture doit aussi intégrer la détection des anomalies de communication et la surveillance des capteurs.
+
+Enfin, la compensation par la température de la pièce exige une coordination entre le contrôle du sur-matelas et la régulation thermique de la chambre.
 
 === 3.2.2 Réveil progressif inopportun ou absent
 
-L'événement redouté est le déclenchement incorrect du réveil progressif intelligent chez un utilisateur qui en dépend : trop tôt, pendant le sommeil profond, ou pas du tout. Il peut perturber le sommeil, causer un réveil tardif ou faire perdre la confiance de l'utilisateur.
+L'événement redouté est le déclenchement incorrect du réveil progressif intelligent chez un utilisateur qui en dépend : trop tôt, pendant le sommeil profond, ou pas du tout.
+Il peut perturber le sommeil, causer un réveil tardif ou faire perdre la confiance de l'utilisateur.
 
 #figure(
     image("./res/risk-bowties/bowtie-2.png", width: 125%),
@@ -423,18 +403,32 @@ L'événement redouté est le déclenchement incorrect du réveil progressif int
 
 ==== Barrières préventives
 
-Trois menaces sont identifiées. La première est une montre connectée injoignable (perte de communication ou batterie faible), qui empêche la détection des phases de sommeil. Un test de connexion et un test de batterie sont réalisés avant le coucher ; en cas d'échec, le système bascule sur un réveil à heure fixe, s'il est configuré.
-La deuxième est une erreur d'estimation de l'heure de réveil par l'algorithme. La phase de sommeil est confirmée par plusieurs mesures successives, puis le déclenchement est vérifié par rapport à la fenêtre de réveil autorisée.
-La troisième est le dysfonctionnement des actionneurs de réveil. Ils sont testés avant le coucher, et la surveillance des accusés de réception détecte l'absence de réponse.
+Trois menaces ont été identifiées :
+
+- *Montre connectée injoignable* (perte de communication ou batterie faible) *:* ce qui empêche la détection des phases de sommeil.
+    Un test de connexion et un test de batterie sont donc réalisés avant le coucher.
+    En cas d'échec, le système bascule sur un réveil à heure fixe, s'il est configuré.
+- *Erreur d'estimation de l'heure de réveil par l'algorithme*: une telle erreur causerait soit un réveil trop tôt soit un réveil trop tradif.
+    C'est pourquoi la phase de sommeil est confirmée par plusieurs mesures successives, puis le déclenchement est vérifié par rapport à la fenêtre de réveil autorisée.
+- *Dysfonctionnement des actionneurs de réveil*: un dysfonctionnement empêcherait le déclenchement du réveil progressif.
+    Pour prévenir cela, les équipements sont testés avant le coucher, et la surveillance des accusés de réception détecte l'absence de réponse.
 
 ==== Barrières mitigatives
 
-Un réveil trop précoce est détecté et interrompu immédiatement, et l'environnement de sommeil est restauré. Si le réveil progressif est défaillant, les actionneurs peuvent agir de façon indépendante, ce qui rend le secours résilient à une défaillance totale du système de contrôle. Un réveil de secours à heure fixe, indépendant de la solution (par exemple une alarme de téléphone), est également prévu. Une explication transparente sur le portail limite la perte de confiance.
+Un réveil trop précoce est détecté et interrompu immédiatement, et l'environnement de sommeil est restauré.
+Si un ou plusieurs équipements du réveil progressif sont défaillants, la diachronie de l'activation des actionneurs limite le risque d'inaction complète du système.
+_Le seul cas possible étant que tout les équipements soient défaillants ou injoignables._
+De plus, un réveil de secours à heure fixe, indépendant de la solution (par exemple une alarme de téléphone), est également prévu.
+Une explication transparente sur le portail limite quant à elle la perte de confiance.
 
 ==== Impact sur l'architecture
 
-Le réveil progressif intelligent et le réveil de secours doivent être distincts. Le premier dépend de l'estimation de la phase de sommeil et de la fenêtre autorisée : il doit recevoir les données nécessaires et piloter les actionneurs. Le second doit fonctionner indépendamment du premier.
-L'architecture doit détecter les défaillances d'équipements et basculer en mode dégradé. Cette séparation réduit la dépendance du réveil à l'intelligence du système et garantit l'heure de réveil souhaitée en cas de défaillance.
+Le réveil progressif intelligent et le réveil de secours doivent être indépendant.
+Le premier dépend de l'estimation de la phase de sommeil et de la fenêtre autorisée : il doit recevoir les données nécessaires et piloter les actionneurs.
+Le second ne dépend que d'une configuration automtique ou manuelle préalable et de l'état des équipement relatif (ex: batterie du téléphone ou de la montre).
+Cette séparation réduit la dépendance du réveil à l'intelligence du système et garantit l'heure de réveil souhaitée en cas de défaillance.
+
+L'architecture doit détecter les défaillances d'équipements et pouvoir basculer en mode dégradé.
 
 === 3.2.3 Dérive du modèle de prise de décision
 
@@ -447,25 +441,29 @@ L'événement redouté est la dérive du modèle qui génère les consignes de c
 
 ==== Barrières préventives
 
-Quatre menaces sont identifiées :
+Quatre menaces ont été identifiées :
 
-- *Nuits atypiques (maladie, substances) :*
-  une détection d'anomalies biométriques par comparaison à la moyenne permet de les exclure du lot d'entraînement.
-- *Données de capteurs de mauvaise qualité :*
-  un filtrage et une validation des données brutes sont appliqués, puis les nuits sont pondérées par un indice de confiance.
-- *Retours subjectifs erronés ou contradictoires :*
-  la note de l'utilisateur est systématiquement croisée avec les métriques objectives.
-- *Fonction d'évaluation inadaptée :*
-  la fonction est validée avant son utilisation dans l'apprentissage.
+- *Nuits atypiques (maladie, substances) :* une détection d'anomalies biométriques par comparaison à la moyenne permet de les exclure du lot d'entraînement.
+- *Données de capteurs de mauvaise qualité :* un filtrage et une validation des données brutes sont appliqués, puis les nuits sont pondérées par un indice de confiance.
+- *Retours subjectifs erronés ou contradictoires :* la note de l'utilisateur est systématiquement croisée avec les métriques objectives.
+- *Fonction d'évaluation inadaptée :* la fonction est validée avant son utilisation dans l'apprentissage.
 
 ==== Barrières mitigatives
 
-Les paramètres de contrôle sont limités à des intervalles autorisés (bornes de sécurité), et les nouveaux paramètres sont validés avant usage, par exemple par simulation. Le suivi du score d'évaluation détecte la dérive : s'il chute, un rollback automatique restaure un modèle précédent. Une réinitialisation manuelle vers le modèle par défaut est aussi possible.
+Les paramètres de contrôle sont limités à des intervalles autorisés (bornes de sécurité), et les nouveaux paramètres sont validés avant usage, par exemple par simulation.
+Le suivi du score d'évaluation détecte la dérive : s'il chute, un rollback automatique restaure un modèle précédent.
+Une réinitialisation manuelle vers le modèle par défaut est aussi possible.
 
 ==== Impact sur l'architecture
 
-La prise de décision et l'apprentissage doivent être séparés. La première utilise le modèle courant pour produire des consignes à partir de l'état de l'utilisateur et de l'environnement ; le second adapte les paramètres du modèle à partir de l'évaluation du sommeil. Le modèle peut ainsi évoluer sans modifier directement les règles de décision ni les mécanismes de sûreté.
-L'architecture doit permettre de valider les nouveaux paramètres, de surveiller les performances du modèle et de revenir à un modèle précédent. Les limites de sécurité doivent être indépendantes des paramètres appris, pour qu'une dérive ne puisse pas produire de consignes hors bornes.
+La prise de décision et l'apprentissage doivent être séparés.
+La première utilise le modèle courant pour produire des consignes à partir de l'état de l'utilisateur et de l'environnement.
+Le second adapte les paramètres du modèle à partir de l'évaluation du sommeil.
+Le modèle peut ainsi évoluer sans modifier directement les règles de décision ni les mécanismes de sûreté.
+
+L'architecture doit également permettre de valider les nouveaux paramètres, de surveiller les performances du modèle et de revenir à un modèle précédent.
+
+Les limites de sécurité doivent être indépendantes des paramètres appris, pour qu'une dérive ne puisse pas produire de consignes hors bornes.
 
 
 ////////////////////////////////////////////////////////////////////////////////
