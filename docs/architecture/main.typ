@@ -118,7 +118,8 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 #linebreak()
 
 5. #link(<toc-5>)[*Choix technologiques*]
-    - ...
+    - Architecture réseau
+    - Justification de l'architecture réseau
 
 
 ////////////////////////////////////////////////////////////////////////////////
