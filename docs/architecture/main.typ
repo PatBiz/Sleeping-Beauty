@@ -88,20 +88,34 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 
 
 = Table des matières
+#linebreak()
 
 // NOTE: La table des matières peut changer
 
 1. #link(<toc-1>)[*Business*]
-    - ...
+    - Contexte d'utilisation
+    - Nos KPIs
+
+#linebreak()
 
 2. #link(<toc-2>)[*Description de l'architecture*]
-    - ...
+    - Nos domaines
+    - Context Map
+
+#linebreak()
 
 3. #link(<toc-3>)[*Analyse des risques*]
-    - ...
+    - Matrice des risques (non-exhaustive)
+    - Bowties
+
+#linebreak()
 
 4. #link(<toc-4>)[*Contraintes opérationnelles*]
-    - ...
+    - Capteurs
+    - Actionneurs
+    - Edge
+
+#linebreak()
 
 5. #link(<toc-5>)[*Choix technologiques*]
     - ...
@@ -114,25 +128,19 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 
 = 1. Business <toc-1>
 
-*Sleeping Beauty* est une *solution installable* dans une maison, un appartement ou un complexe d'appartement.
-Elle a pour objectif d'*améliorer les conditions de sommeil* en agissant sur l'*environnement de l'utilisateur*.
-Elle propose *un suivi* et des *solutions personnalisés*, basées sur le comportement de l'utilisateur avant, pendant, et après sa nuit.
+*Sleeping Beauty* est une *solution domotique installable* dans une maison ou un appartement, visant à *améliorer la qualité du sommeil* grâce à un environnement adapté au comportement de l'utilisateur.
 
-*Avant le coucher*, le système analyse le comportement de l'utilisateur pour *adapter automatiquement son environnement* en baissant la *température*, en atténuant la *luminosité* et en diffusant des *sons apaisants* afin de préparer un endormissement optimal.
-
-*Pendant la nuit*, l'installation régule en continu ces paramètres environnementaux pour maintenir des *conditions stables* et préserver la *qualité du repos*.
-
-*Au réveil*, la solution synchronise la sortie du lit avec les *cycles de sommeil léger* tout en *simulant la lumière du jour* et en *jouant des sons progressifs* pour faciliter le réveil.
-
+*Avant le coucher*, elle ajuste la température, la luminosité et les sons pour favoriser l'endormissement.
+*Pendant la nuit*, elle régule ces paramètres afin de maintenir des conditions optimales de repos.
+*Au réveil*, elle synchronise la sortie du lit avec les cycles de sommeil léger, simule la lumière du jour et diffuse des sons progressifs pour faciliter le réveil.
 
 == 1.1 Contexte d'utilisation
 
-Notre solution s'adresse à un public relativement large. Toutefois, afin d'en garantir l'efficacité optimale, nous considérons que l'utilisateur est un adulte ne présentant pas de troubles particuliers du sommeil, et disposant d'un rythme circadien classique, c'est-à-dire une personne qui dort la nuit et travaille le jour.
+Sleeping Beauty s'adresse principalement aux adultes sans troubles particuliers du sommeil, ayant un rythme circadien classique (sommeil nocturne et activité diurne).
+Elle n'est pas destinée aux personnes présentant un manque d'autonomie, notamment les nourrissons et les personnes en situation de handicap mental ou moteur.
 
-En revanche, Sleeping Beauty n'est pas destinée aux personnes présentant un handicap moteur ou un manque d'autonomie, comme les nourrissons ou les personnes en situation de handicap mental.
-
-Le fonctionnement de Sleeping Beauty nécessite également une chambre équipée d'un système domotique comprenant au minimum les équipements compatibles nécessaires (chauffage, climatisation, volets, éclairage, etc.). Lors de l'installation, les équipements non compatibles sont remplacés et les équipements manquants sont ajoutés afin de garantir le bon fonctionnement de la solution.
-
+Son fonctionnement nécessite une chambre équipée d'un système domotique compatible (chauffage, climatisation, volets, éclairage, etc.).
+Lors de l'installation, les équipements manquants sont ajoutés et les équipements incompatibles sont remplacés afin d'assurer le bon fonctionnement de la solution.
 
 == 1.2 Nos KPIs
 
@@ -150,48 +158,33 @@ Le fonctionnement de Sleeping Beauty nécessite également une chambre équipée
 
 === 2.1.1 Core Domains
 
+Les 3 domaines suivant on pour rôle principal de déterminer les actions à appliquer afin arriver à un certain objectif.
+Ils se basent tous sur :
+- les mesures de l'environnement
+- l'état estimé de l'utilisateur
+- les paramètres de contrôle disponibles (défini par le système et par l'utilisateur)
+Et ils exploitent également le jumeau numérique de la chambre pour simuler les conséquences possibles des actions envisagées.
+
 ==== Préparation de l'environnement avant le sommeil
 
-Ce domaine définit les stratégies permettant de préparer l'environnement de sommeil afin de favoriser l'endormissement de l'utilisateur.
-Il détermine les conditions environnementales à atteindre avant le début de la phase de sommeil, notamment en matière de température et de luminosité.
-L'objectif est de rendre l'environnement favorable à l'endormissement au moment où l'utilisateur souhaite se coucher.
+Ce domaine prépare l'environnement de sommeil afin de favoriser l'endormissement de l'utilisateur.
+Il détermine les conditions environnementales à atteindre avant le début de la phase de sommeil.
 
 ==== Régulation de l'environnement pendant le sommeil
 
-Ce domaine définit les stratégies de régulation de l'environnement pendant la phase de sommeil afin d'en améliorer la qualité.
+Ce domaine régule l'environnement pendant la phase de sommeil pour maintenir un environnement favorable au sommeil tout au long de la nuit.
 Il s'appuie sur les mesures de l'environnement et sur l'état de sommeil estimé de l'utilisateur pour adapter les conditions de la chambre et du lit.
-L'objectif est de maintenir un environnement favorable au sommeil tout au long de la nuit.
 
 ==== Gestion du réveil
 
-Ce domaine définit les stratégies permettant d'adapter l'environnement afin de favoriser un réveil naturel, tout en garantissant que l'utilisateur ne se réveille pas au-delà de l'heure souhaitée.
-Il distingue deux mécanismes complémentaires : le réveil doux, qui cherche à favoriser un réveil progressif et agréable, et le réveil impératif, qui garantit le respect de l'heure limite définie par l'utilisateur.
+Ce domaine favorise un réveil naturel, tout en garantissant que l'utilisateur ne se réveille pas au-delà de l'heure souhaitée.
+Il distingue deux mécanismes complémentaires :
+- le *réveil doux*, qui cherche à favoriser un réveil progressif et agréable.
+    Durant cette phase, il  adapte progressivement l'environnement, notamment par la lumière, les émissions sonores ou la température, afin de faciliter le réveil au cours d'une fenêtre temporelle prédéfinie.
+- le *réveil impératif*, qui garantit le respect de l'heure limite définie par l'utilisateur.
+    Durant cette phase déclenche les actions nécessaires pour réveiller l'utilisateur à l'heure limite.
+    Ce réveil intervient uniquement si le réveil doux a échoué.
 
-- *Gestion du réveil doux*
-
-    Ce sous-domaine vise à favoriser un réveil naturel et progressif en exploitant les phases de sommeil estimées de l'utilisateur.
-    Il adapte progressivement l'environnement, notamment par la lumière, les émissions sonores ou la température, afin de faciliter le réveil au cours d'une fenêtre temporelle prédéfinie.
-
-- *Gestion du réveil impératif*
-
-    Ce sous-domaine garantit que l'utilisateur ne dépasse pas l'heure de réveil qu'il a définie.
-    Lorsque le réveil doux n'a pas permis de réveiller l'utilisateur dans la fenêtre prévue, il déclenche les actions nécessaires pour provoquer son réveil à l'heure limite.
-
-==== Prise de décision intelligente
-
-Ce domaine détermine les actions à appliquer sur l'environnement de sommeil afin d'atteindre les objectifs définis par les stratégies de contrôle.
-Il s'appuie sur les mesures de l'environnement, l'état estimé de l'utilisateur, les règles de décision et les paramètres de contrôle disponibles.
-Il exploite également le jumeau numérique pour simuler les conséquences possibles des actions envisagées sur l'environnement physique.
-
-- *Prise de décision selon les règles définies*
-
-    Ce mécanisme sélectionne les actions à effectuer en fonction de l'état courant de l'environnement, des objectifs de contrôle et des règles métier définies.
-    Il applique les paramètres de contrôle disponibles tout en respectant les préférences et les contraintes imposées au système.
-
-- *Exploitation du jumeau numérique*
-
-    Ce mécanisme exploite une représentation numérique de l'environnement physique afin d'estimer les conséquences possibles des actions envisagées.
-    Il permet notamment de simuler l'évolution des conditions environnementales à la suite d'une action, afin d'éclairer la prise de décision.
 
 === 2.1.2 Supporting Domains
 
@@ -210,12 +203,6 @@ Ce domaine vise à améliorer progressivement les stratégies de contrôle en ad
 Ce domaine évalue la qualité du sommeil de l'utilisateur à partir des phases et des cycles de sommeil mesurés.
 Il calcule un score permettant de caractériser la qualité d'une nuit et de comparer les résultats obtenus avec ceux des nuits précédentes.
 Les résultats de cette évaluation sont également exploités par le système d'apprentissage afin d'adapter progressivement les paramètres de contrôle.
-
-#blockquote()[
-    *Note :*
-    Ce domaine pourrait également être classé comme Core si la qualité de l'évaluation et son utilisation dans la boucle d'adaptation constituent des éléments essentiels à la différenciation de la solution.
-    À l'inverse, il peut être considéré comme Supporting si son fonctionnement repose principalement sur des méthodes standardisées.
-]
 
 ==== Mesure de l'environnement de sommeil
 
@@ -307,7 +294,7 @@ La context-map met en évidence quatre bounded contexts, chacun regroupant des r
 
 Ce contexte regroupe les fonctionnalités permettant de préparer et de réguler l'environnement de la chambre afin de favoriser le sommeil.
 Il s'appuie sur les mesures de l'environnement, les phases de sommeil, les données météorologiques ainsi que sur les préférences de l'utilisateur pour alimenter la prise de décision intelligente.
-Les décisions prises sont ensuite traduites en actions sur les équipements connectés, notamment pour la préparation de l'environnement, sa régulation pendant la nuit et la gestion du réveil.
+Les décisions prises sont ensuite traduites en actions sur les équipements connectés.
 
 === 2.2.2 Fine-tuning du modèle de prise de décision
 
@@ -467,7 +454,7 @@ Les limites de sécurité doivent être indépendantes des paramètres appris, p
 
 
 ////////////////////////////////////////////////////////////////////////////////
-#pagebreak()
+#linebreak() // #pagebreak()
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -497,9 +484,64 @@ Les limites de sécurité doivent être indépendantes des paramètres appris, p
 
 == 5.1 Architecture réseau
 
-// TODO: Développer & s'assurer que ça réponde aux contraintes opérationnelles et aux risques identifiés
-
 #figure(
     image("./res/network.png", width: 125%),
     caption: "Architecture réseau",
 )
+
+== 5.2 Justification de l'architecture réseau
+
+=== Cohérence avec les contraintes opérationnelles
+
+Les latences de commande (< 0,5s pour les lampes, < 1s pour les sons et les volets, < 2s pour le sur-matelas) interdisent un aller-retour vers le cloud.
+Toute la boucle capteurs, décision, commande s'exécute donc sur l'edge, qui peut fonctionner sans connexion internet.
+
+Pour répondre à la fois au contrainte d'autonomie et de portée des capteurs soit 18 mois d'autonomie et 15 à 20m de portée, Zigbee est parfait.
+Le BLE quant à lui convient parfaitement à la montre (10m de portée & 3 jours d'autonomie).
+De plus, deux passerelles distinctes permettent de supporter les deux protocoles.
+
+Le broker MQTT, avec des QoS différenciés selon la criticité des messages, les accusés de réception sous 3s (3 tentatives max) ainsi qu'un buffer local, permettent de viser un taux de livraison ≥ 98 % et moins de 5 % de données perdues.
+Les échanges sont chiffrés (TLS, appairage authentifié).
+
+Les flux en *stream* (capteurs, commandes, phases de sommeil) sont traités en temps réel.
+Les flux en *batch* (historique de fin de nuit vers le fog) permettent l'apprentissage "entre les nuits" prévu pour le POC.
+
+=== Cohérence avec l'analyse de risques
+
+- *Perte de contrôle du chauffage :* le watchdog est indépendant du contrôleur intelligent.
+    Il surveille les accusés de réception et keep-alive, et dispose d'un canal de commandes d'urgence prioritaires pour couper le sur-matelas.
+    Les bornes 16-24°C et la coupure à 40°C restent appliquées côté équipement.
+- *Réveil inopportun ou absent :* le contrôleur de intelligent pilote le réveil progressif.
+    Le watchdog détecte les défaillances (montre, actionneurs) et déclenche le mode dégradé. Le réveil de secours (alarme de téléphone) est volontairement hors architecture.
+- *Dérive du modèle :* le fog est séparé de l'edge. Les nouveaux paramètres sont validés avant déploiement, et le rollback est local. Les bornes de sécurité, appliquées par le watchdog et les équipements, empêchent toute consigne hors limites.
+- *Confiance de l'utilisateur :* la supervision du parc alimente le portail, qui explique les anomalies de façon transparente.
+
+=== Cohérence avec l'architecture métier
+
+#box[
+    #set text(size: 9pt)
+
+    #pad(x: -1.5cm, table(
+    columns: (1fr, 1fr),
+    align: (left, left),
+    stroke: 0.5pt,
+    inset: 6pt,
+
+    table.header(
+        [*Bounded context*],
+        [*Composants*],
+    ),
+
+    [Gestion de l'environnement de sommeil],
+    [Contrôleur intelligent, broker, gateways, météo],
+
+    [Fine-tuning du modèle],
+    [Entraînement IA (fog)],
+
+    [Suivi du sommeil et des équipements],
+    [Système d'évaluation, portail],
+
+    [Sûreté de fonctionnement],
+    [Watchdog, supervision du parc],
+    ))
+]

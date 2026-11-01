@@ -2,10 +2,10 @@
 |||
 |:-------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
 | **Rôle**                 | Exécution locale du modèle de décision, du jumeau numérique et du traitement des capteurs.                                                     |
-| **Capacité de calcul**   | ≥ 4 cœurs, 8 Go de mémoire, 128 Go de stockage. ≤ 15 W                                                                                         |
+| **Capacité de calcul**   | ≥ 4 cœurs, 8 Go de mémoire, 128 Go de stockage.                                                                                                |
 | **Données persistantes** | Configuration des équipements.<br/> Dernière version du modèle de décision ainsi que la précédente (pour un rollback sans connexion internet). |
 | **Réseau**               | Taux de livraison des messages: ≥ 98%<br/> Accusé de réception sous 3s (3 tentatives max)                                                      |
-| **Sécurité et temps**    | Échanges chiffrés et appairage authentifié. Horloge synchronisée à ±1s                                                                         |
+| **Sécurité**             | Échanges chiffrés et appairage authentifié.                                                                                                    |
  */
 
 #box[
@@ -32,6 +32,6 @@
         Accusé de réception sous 3s (3 tentatives max)],
 
         [*Sécurité et temps*],
-        [Échanges chiffrés et appairage authentifié. Horloge synchronisée à ±1s],
+        [Échanges chiffrés et appairage authentifié],
     ))
 ]
