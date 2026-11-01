@@ -473,37 +473,19 @@ Les limites de sécurité doivent être indépendantes des paramètres appris, p
 
 = 4. Contraintes opérationnelles <toc-4>
 
-// TODO: À relire & améliorer
+== 4.1 Capteurs
 
-== 4.1 Installation et déploiement
+#include "res/operating-constraints/sensors.typ"
 
-L'un des objectifs métier principaux est de permettre l'installation et la configuration de la solution dans une chambre connectée en moins d'une heure, par un technicien. Le processus de déploiement doit donc être suffisamment simple et rapide pour limiter les interventions techniques sur site.
 
-== 4.2 Interface utilisateur et gestion des jumeaux numériques
+== 4.2 Actionneurs
 
-Le gérant d'un parc de chambres connectées, ainsi que l'utilisateur souhaitant consulter les informations relatives à sa chambre, doivent disposer d'une interface simplifiée permettant de visualiser et d'interagir avec les jumeaux numériques. Cette interface doit notamment permettre de paramétrer les différents objets connectés et de configurer les solutions et fonctionnalités disponibles dans la chambre.
+#include "res/operating-constraints/actuators.typ"
 
-== 4.3 Fiabilité et autonomie des composants
 
-Les différents composants de la solution fonctionnant sur batterie, il est nécessaire de garantir leur bon fonctionnement et de vérifier leur niveau de charge avant le début de chaque nuit. Un mécanisme de vérification doit ainsi permettre de s'assurer que l'ensemble des capteurs et des actionneurs sont opérationnels afin d'éviter toute défaillance pendant l'utilisation.
+== 4.3 Edge
 
-En cas de coupure de communication ou de défaillance du système central, la régulation de la pièce, notamment en ce qui concerne la température et le taux de CO2, doit pouvoir continuer à fonctionner de manière autonome. De plus, les actionneurs doivent être conçus pour adopter un état sûr en cas de perte de connexion, afin de ne présenter aucun risque direct pour l'utilisateur.
-
-== 4.4 Confidentialité et sécurité des données
-
-Les données relatives au sommeil de l'utilisateur, telles que la fréquence cardiaque ou les habitudes de sommeil, sont particulièrement sensibles. Leur collecte, leur stockage et leur traitement doivent donc respecter des exigences strictes en matière de confidentialité et de sécurité, afin d'empêcher toute fuite ou tout accès non autorisé.
-
-== 4.5 Gestion du réveil progressif
-
-Le système de réveil progressif doit également prévoir un mécanisme de sécurité dans le cas où l'utilisateur ne serait pas réveillé pendant la fenêtre de réveil prévue, notamment en raison de son cycle de sommeil. Un dispositif de réveil alternatif doit alors prendre le relais afin de garantir le réveil de l'utilisateur à l'heure souhaitée.
-
-== 4.6 Contraintes de communication BLE
-
-Dans l'architecture retenue, la montre connectée communique avec la passerelle Edge via Bluetooth Low Energy (BLE). Cette technologie impose une contrainte de proximité : la montre doit se trouver à une distance maximale d'environ 10 mètres de la passerelle pour garantir une communication fiable.
-
-== 4.7 Puissance de calcul et traitement des données
-
-Enfin, certains traitements nécessaires à la création de modèles personnalisés, notamment ceux visant à analyser les habitudes de sommeil et à s'adapter aux cycles de chaque utilisateur, nécessitent une puissance de calcul importante. Ces traitements ne pouvant pas être entièrement réalisés au niveau de l'Edge, il est nécessaire de prévoir une architecture permettant de déporter les calculs les plus lourds vers une infrastructure distante, tout en conservant au niveau de l'Edge les traitements nécessitant une faible latence ou un fonctionnement autonome.
+#include "res/operating-constraints/edge.typ"
 
 
 ////////////////////////////////////////////////////////////////////////////////
