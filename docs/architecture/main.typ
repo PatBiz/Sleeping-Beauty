@@ -24,7 +24,7 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 
 #let blockquote(body) = block(
     width: 100%,
-    stroke: (left: 2pt + red, rest: none),
+    // stroke: (left: 2pt + red, rest: none),
     outset: (left: 1em),
     inset: (left: 1em, rest: 0.65em),
     body,
