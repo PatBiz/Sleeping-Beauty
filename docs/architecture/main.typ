@@ -213,8 +213,8 @@ Les informations ainsi collectées sont exploitées par le système de décision
 
 #blockquote()[
     *Note :*
-    La mesure du CO2 et de l'humidité n'alimente que la génération d'alertes.
-    Un système d'aération, ou une ouverture des fenêtre automatique est nécessaire pour pouvoir les réguler.
+    La mesure du CO2 n'alimente que la génération d'alertes.
+    Un système d'aération, ou une ouverture des fenêtre automatique est nécessaire pour pouvoir le réguler.
     Cependant, nous ne fournissons pas de telles fonctionnalités.
 ]
 
@@ -458,7 +458,6 @@ Les limites de sécurité doivent être indépendantes des paramètres appris, p
 #linebreak() // #pagebreak()
 ////////////////////////////////////////////////////////////////////////////////
 
-
 = 4. Contraintes opérationnelles <toc-4>
 
 == 4.1 Capteurs
@@ -469,12 +468,6 @@ Les limites de sécurité doivent être indépendantes des paramètres appris, p
 == 4.2 Actionneurs
 
 #include "res/operating-constraints/actuators.typ"
-
-
-== 4.3 Edge
-
-#include "res/operating-constraints/edge.typ"
-
 
 ////////////////////////////////////////////////////////////////////////////////
 #pagebreak()
