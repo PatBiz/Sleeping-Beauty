@@ -1,69 +1,27 @@
-/*
-| Capteur                 | Plage de mesure                                                                | Précision                                                                                                                          | Cadence et latence                                                  | Portée   | Autonomie            |
-|:------------------------|:-------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------|:---------|----------------------|
-| **Température chambre** | −10 à 50°C                                                                     | ±0,3°C avec une dérive ≤ 0,5°C après 100 jours                                                                                     | Rapport sur variation ≥ 0,2°C avec une latence < 1s                 | 15 à 20m | ≥ 18 mois (pile)     |
-| **Température lit**     | 0 à 50°C                                                                       | ±0,2°C avec une dérive ≤ 0,5°C après 100 jours                                                                                     | Rapport sur variation ≥ 0,1°C avec une latence < 1s                 | 15 à 20m | ≥ 18 mois (pile)     |
-| **CO2 et humidité**     | CO2: 400 à 5000 ppm<br> Humidité: 0 à 100%                                     | CO2 ±(50 ppm + 5%)<br> Humidité ±2%                                                                                                | 1 mesure/min avec une latence < 2s                                  | 15 à 20m | ≥ 18 mois (pile)     |
-| **Luminosité**          | 0,01 à 10 000 lux                                                              | ±15%                                                                                                                               | 1 mesure/min avec une latence < 2s                                  | 15 à 20m | ≥ 18 mois (pile)     |
-| **Montre connectée**    | Phase de sommeil (éveil, léger, profond, REM)<br> Fréquence cardiaque (en bpm) | Concordance des phases avec la référence clinique d'environ 70 à 80%.<br> Fréquence cardiaque ±3 bpm.<br> Cycles de sommeil ≥ 90%. | Envoi toutes les 10 min la nuit, ≤ 2 min dans la fenêtre de réveil. | ≥ 10m    | ≥ 3 jours (batterie) |
- */
-
 #box[
     #set text(size: 9pt)
 
     #pad(x: -1.5cm, table(
-        columns: (auto, 1fr, 1fr, 1fr, auto, auto),
-        align: (left, left, left, left, left, left),
+        columns: (1fr, 3fr),
+        align: left,
         stroke: 0.5pt,
-        inset: 6pt,
+        inset: 8pt,
 
         table.header(
-            [*Capteur*],
-            [*Plage de mesure*],
-            [*Précision*],
-            [*Cadence et latence*],
-            [*Portée*],
-            [*Autonomie*],
+            [*Nom du capteur*],
+            [*Contrainte opérationnelle*],
         ),
 
-        [*Température chambre*],
-        [-10 à 50°C],
-        [±0,3°C avec une dérive ≤ 0,5°C après 100 jours],
-        [Rapport sur variation ≥ 0,2°C avec une latence < 1s],
-        [15 à 20m],
-        [≥ 18 mois (pile)],
+        [Thérmomètre],
+        [Ce capteur sera accroché ou collé aux murs de la chambre. Il doit pouvoir se confondre au mur. Le capteur doit pouvoir resister aux dêpots divers (poussière, cigarette...) qui pourrais s'accumuler sans nettoyage par l'utilisateur. Il doit pouvoir capter les changements de température dans un environement au climat doux.],
 
-        [*Température lit*],
-        [0 à 50°C],
-        [±0,2°C avec une dérive ≤ 0,5°C après 100 jours],
-        [Rapport sur variation ≥ 0,1°C avec une latence < 1s],
-        [15 à 20m],
-        [≥ 18 mois (pile)],
+        [Capteur d'humidité],
+        [Ce capteur sera accroché ou collé aux murs de la chambre. Il doit pouvoir se confondre au mur. Le capteur doit pouvoir resister aux dêpots divers (poussière, cigarette...) qui pourrais s'accumuler sans nettoyage par l'utilisateur.],
 
-        [*CO2 et humidité*],
-        [CO2: 400 à 5000 ppm \
-        Humidité: 0 à 100%],
-        [CO2 ±(50 ppm + 5%) \
-        Humidité ±2%],
-        [1 mesure/min avec une latence < 2s],
-        [15 à 20m],
-        [≥ 18 mois (pile)],
+        [Capteur de CO2],
+        [Ce capteur sera accroché ou collé aux murs de la chambre. Il doit pouvoir se confondre au mur. Le capteur doit pouvoir resister aux dêpots divers (poussière, cigarette...) qui pourrais s'accumuler sans nettoyage par l'utilisateur.],
 
-        [*Luminosité*],
-        [0,01 à 10 000 lux],
-        [±15%],
-        [1 mesure/min avec une latence < 2s],
-        [15 à 20m],
-        [≥ 18 mois (pile)],
-
-        [*Montre connectée*],
-        [Phase de sommeil (éveil, léger, profond, REM) \
-        Fréquence cardiaque (en bpm)],
-        [Concordance des phases avec la référence clinique d'environ 70 à 80%. \
-        Fréquence cardiaque ±3 bpm. \
-        Cycles de sommeil ≥ 90%.],
-        [Envoi toutes les 10 min la nuit, ≤ 2 min dans la fenêtre de réveil.],
-        [≥ 10m],
-        [≥ 3 jours (batterie)],
+        [Montre connectée],
+        [La montre doit offrir un confort utilisateur fort. Elle doit offrir les capteurs nécessaires à la mesure du cycle de sommeil. Elle doit aussi offrir une longue autonomie, afin d'assurer que des oublis de charge utilisateur ne bloquent pas obligatoirement un de nos core domain. La montre doit permettre le développement d'une application qui utilisera ses données capteurs afin de générer un cycle de sommeil approximatif entre l'instant t0 et l'instant t+60.],
     ))
 ]

@@ -76,17 +76,6 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#set page(
-    header: [#align(center)[_Architecture - Sleeping Beauty_]],
-    numbering: "1",
-)
-#counter(page).update(1)
-
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
 = Table des matières
 #linebreak()
 
@@ -94,11 +83,12 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 
 1. #link(<toc-1>)[*Business*]
     - Contexte d'utilisation
+    - Nos besoins
     - Nos KPIs
 
 #linebreak()
 
-2. #link(<toc-2>)[*Description de l'architecture*]
+2. #link(<toc-2>)[*Architecture métier*]
     - Nos domaines
     - Context Map
 
@@ -113,17 +103,28 @@ Rapport explicatif de votre architecture (15 pages max). Il doit comporter:
 4. #link(<toc-4>)[*Contraintes opérationnelles*]
     - Capteurs
     - Actionneurs
-    - Edge
 
 #linebreak()
 
 5. #link(<toc-5>)[*Choix technologiques*]
-    - Architecture réseau
-    - Justification de l'architecture réseau
+    - Infrastructure réseau
+    - Architecture
+    - Justification de l'architecture
 
 
 ////////////////////////////////////////////////////////////////////////////////
 #pagebreak()
+////////////////////////////////////////////////////////////////////////////////
+
+
+#set page(
+    header: [#align(center)[_Architecture - Sleeping Beauty_]],
+    numbering: "1",
+)
+#counter(page).update(1)
+
+
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -141,9 +142,23 @@ Sleeping Beauty s'adresse principalement aux adultes sans troubles particuliers 
 Elle n'est pas destinée aux personnes présentant un manque d'autonomie, notamment les nourrissons et les personnes en situation de handicap mental ou moteur.
 
 Son fonctionnement nécessite une chambre équipée d'un système domotique compatible (chauffage, climatisation, volets, éclairage, etc.).
+L'utilisateur doit également posséder une montre connectée compatible avec Sleeping Beauty.
 Lors de l'installation, les équipements manquants sont ajoutés et les équipements incompatibles sont remplacés afin d'assurer le bon fonctionnement de la solution.
 
-== 1.2 Nos KPIs
+== 1.2 Nos besoins
+
+- Mesurer l'efficacité du sommeil (SE) à partir de la durée du sommeil (ST) et de la durée dans le lit (BT) ($"SE" = "ST" / "BT"$).
+- Générer l'hypnogramme de l'utilisateur et le comparer à un hypnogramme idéal.
+- Optimiser la qualité du sommeil en agissant sur l'environement (température, son, lumière).
+- Alerter d'une mauvaise qualité de l'air (CO2, humidité) de la chambre en temps réel.
+- Mesurer les cycles de sommeil, les battements de cœur et l'oxygénation.
+- Signaler à l'utilisateur les problèmes de sommeil perçus.
+- Réveiller l'utilisateur impérativement à une heure précise définie, idéalement de manière progressive lors d'une phase de sommeil léger.
+- Assurer une installation rapide de la solution.
+- Permettre à un non-expert de gérer et configurer plusieurs chambres.
+- Garantir un mode dégradé du système en cas de panne internet.
+
+== 1.3 Nos KPIs
 
 #include "res/kpis.typ"
 
@@ -476,23 +491,33 @@ Les limites de sécurité doivent être indépendantes des paramètres appris, p
 
 = 5. Choix technologiques <toc-5>
 
-== 5.1 Architecture réseau
+== 5.1 Infrastructure réseau
 
 #figure(
     image("./res/network.png", width: 125%),
-    caption: "Architecture réseau",
+    caption: "Infrastructure réseau",
 )
 
-== 5.2 Justification de l'architecture réseau
+== 5.2 Architecture
+
+#figure(
+    image("./res/architecture.png", width: 125%),
+    caption: "Architecture",
+)
+
+== 5.3 Justification de l'architecture
 
 === Cohérence avec les contraintes opérationnelles
 
-Les latences de commande (< 0,5s pour les lampes, < 1s pour les sons et les volets, < 2s pour le sur-matelas) interdisent un aller-retour vers le cloud.
+Les latences de commande interdisent un aller-retour vers le cloud.
 Toute la boucle capteurs, décision, commande s'exécute donc sur l'edge, qui peut fonctionner sans connexion internet.
 
-Pour répondre à la fois au contrainte d'autonomie et de portée des capteurs soit 18 mois d'autonomie et 15 à 20m de portée, Zigbee est parfait.
-Le BLE quant à lui convient parfaitement à la montre (10m de portée & 3 jours d'autonomie).
-De plus, deux passerelles distinctes permettent de supporter les deux protocoles.
+La gateway permet d'intéragir avec plusieurs protocoles réseau.
+En particulier, nous avons choisi Zigbee et BLE (ce choix sera justifié dans le rapport sur la pipeline d'ingestion de données).
+
+// Pour répondre à la fois au contrainte d'autonomie et de portée des capteurs soit 18 mois d'autonomie et 15 à 20m de portée, Zigbee est parfait.
+// Le BLE quant à lui convient parfaitement à la montre (10m de portée & 3 jours d'autonomie).
+// De plus, deux passerelles distinctes permettent de supporter les deux protocoles.
 
 Le broker MQTT, avec des QoS différenciés selon la criticité des messages, les accusés de réception sous 3s (3 tentatives max) ainsi qu'un buffer local, permettent de viser un taux de livraison ≥ 98 % et moins de 5 % de données perdues.
 Les échanges sont chiffrés (TLS, appairage authentifié).
@@ -530,7 +555,7 @@ Les flux en *batch* (historique de fin de nuit vers le fog) permettent l'apprent
     [Contrôleur intelligent, broker, gateways, météo],
 
     [Fine-tuning du modèle],
-    [Entraînement IA (fog)],
+    [Entraînement IA],
 
     [Suivi du sommeil et des équipements],
     [Système d'évaluation, portail],

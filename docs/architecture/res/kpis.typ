@@ -32,7 +32,7 @@
         table.cell(rowspan: 4)[*Qualité du sommeil*],
         [Évolution de l'écart avec un hypnogramme idéal (sur 30j)],
         [En baisse],
-        [Efficacité du sommeil (sur 30j)],
+        [Efficacité du sommeil (sur 30j) ($"SE" = "ST" / "BT"$)],
         [En hausse],
         [Approximation du cycle de sommeil par rapport au clinique],
         [90%],
