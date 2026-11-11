@@ -23,7 +23,7 @@ Rapport de l'architecture de votre Data Ingestion Pipeline (15 pages max). Celui
 
 #let blockquote(body) = block(
     width: 100%,
-    stroke: (left: 2pt + red, rest: none),
+    // stroke: (left: 2pt + red, rest: none),
     outset: (left: 1em),
     inset: (left: 1em, rest: 0.65em),
     body,
